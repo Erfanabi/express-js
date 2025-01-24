@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+const users = [{ id: 1, name: "John" }, { id: 2, name: "Doe" }, { id: 3, name: "Erfan" }]
 
 app.get('/', (req, res) => {
   res.send('hello world')
@@ -10,9 +11,25 @@ app.get('/', (req, res) => {
 })
 
 app.get('/users', (req, res) => {
-  res.status(200).json({ users: [{ id: 1, name: "John" }, { id: 2, name: "Doe" }] })
+  res.status(200).json({ users })
 })
+
+
+app.get('/users/:id', (req, res) => {
+  const { id } = req.params
+  const user = users.find(user => user.id === +id)
+  if (!user) {
+    res.status(404).json({ statusCode: res.statusCode, message: 'Not Found' })
+  } else {
+    res.status(200).json({ statusCode: res.statusCode, data: { user } })
+  }
+})
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+
+// rest api
+// restfull api
