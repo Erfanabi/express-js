@@ -1,0 +1,13 @@
+{
+  "name": "expressJS",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "private": true,
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
