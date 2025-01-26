@@ -16,7 +16,6 @@ app.get('/users', (req, res) => {
   res.status(200).json({ users })
 })
 
-
 app.get('/users/:id', (req, res) => {
   const { id } = req.params
   const user = users.find(user => user.id === +id)
@@ -27,6 +26,7 @@ app.get('/users/:id', (req, res) => {
   }
 })
 
+// optional parameter
 app.get('/product/:id?', (req, res) => {
   const { id } = req.params
 
@@ -40,7 +40,6 @@ app.get('/product/:id?', (req, res) => {
   res.status(200).json({ statusCode: res.statusCode, data: { products } })
 
 })
-
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
