@@ -48,3 +48,38 @@ app.listen(port, () => {
 
 // rest api
 // restfull api
+
+// ----------- query string
+
+const posts = [
+  { title: "Learn JavaScript", description: "JavaScript is a versatile programming language." },
+  { title: "Introduction to Express.js", description: "Learn how to build web applications with Express.js." },
+  { title: "Mastering Node.js", description: "Node.js allows you to build scalable network applications." },
+  { title: "Tech News Today", description: "Stay updated with the latest technology trends." },
+  { title: "Healthy Living Tips", description: "Tips for maintaining a healthy lifestyle." },
+  { title: "Travel Guide", description: "Explore the best travel destinations worldwide." }
+];
+
+
+app.get('/search', (req, res) => {
+  const queryString = req.query || 'No query provided';
+  res.send(`Query: ${JSON.stringify(queryString)}`);
+});
+
+app.get('/complex', (req, res) => {
+  const query = req.query;
+  res.json(query);
+});
+
+app.get('/blogs', (req, res) => {
+  const { title, description } = req.query;
+
+  const regexTitle = title ? new RegExp(title, `gi`) : null;
+  const regexDesc = description ? new RegExp(description, `gi`) : null;
+
+  const filter = posts.filter(post => post.title.match(regexTitle) || post.description.match(regexDesc));
+
+  console.log({ regexTitle, filter })
+
+  res.send({ posts: filter });
+});
