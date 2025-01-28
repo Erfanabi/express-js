@@ -2,20 +2,24 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+const morgan = require('morgan');
+
+app.use(morgan('combined'));  // dev, tiny
+
 app.use(express.json())
 app.use(express.urlencoded())
 
 // تو همه ی روت ها استفاده می شه
-app.use(function (req, res, next) {
-  console.log("Log1")
-  next()
-}, function (req, res, next) {
-  console.log("Log2")
-  next()
-}, function (req, res, next) {
-  console.log("Log3")
-  next()
-})
+// app.use(function (req, res, next) {
+//   console.log("Log1")
+//   next()
+// }, function (req, res, next) {
+//   console.log("Log2")
+//   next()
+// }, function (req, res, next) {
+//   console.log("Log3")
+//   next()
+// })
 
 // فقط روت هایی که بخوایم
 function checkTime(req, res, next) {
