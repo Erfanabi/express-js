@@ -4,22 +4,17 @@ const port = 3000
 
 const morgan = require('morgan');
 
-app.use(morgan('combined'));  // dev, tiny
+const camelCaseKey = (...args) =>
+  import("camelcase-keys").then(({ default: camelCaseKey }) => {
+    return camelCaseKey(...args);
+  });
+
+
+// app.use(morgan('combined'));  // dev, tiny
 
 app.use(express.json())
 app.use(express.urlencoded())
 
-// تو همه ی روت ها استفاده می شه
-// app.use(function (req, res, next) {
-//   console.log("Log1")
-//   next()
-// }, function (req, res, next) {
-//   console.log("Log2")
-//   next()
-// }, function (req, res, next) {
-//   console.log("Log3")
-//   next()
-// })
 
 // فقط روت هایی که بخوایم
 function checkTime(req, res, next) {
@@ -37,6 +32,16 @@ function checkAuth(req, res, next) {
   res.send("Authentication is failed")
 }
 
+async function camelCase(req, res, next) {
+  req.body = await camelCaseKey(req.body, { deep: true })
+  req.query = await camelCaseKey(req.query)
+  req.params = await camelCaseKey(req.params)
+
+  next()
+}
+
+app.use(camelCase)
+
 app.get('/', (req, res) => {
   console.log("Response route")
   res.send("finish request")
@@ -46,6 +51,15 @@ app.get('/users', checkAuth, checkTime, (req, res) => {
   console.log(req.time)
   console.log("Response route users")
   res.send("users")
+})
+
+app.get('/blogs', async (req, res) => {
+  console.log(req.query)
+  res.send({
+    body: req.body,
+    query: req.query,
+    params: req.params,
+  })
 })
 
 

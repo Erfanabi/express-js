@@ -8,6 +8,8 @@
   },
   "private": true,
   "dependencies": {
+    "camelcase": "^8.0.0",
+    "camelcase-keys": "^9.1.3",
     "express": "^4.21.2",
     "morgan": "^1.10.0"
   }
