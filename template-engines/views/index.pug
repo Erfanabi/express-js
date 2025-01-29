@@ -7,15 +7,18 @@ html(lang="en")
         link(rel="stylesheet", href="/style.css")
     title Pug Template Engine
     body
+        include partials/_nav
         div
             header
-                h2.red Pug Template Engine
+                h2.red #{section}
 
             section
                 h2 my section of web page
                 p lorem ipsum erfan shara
+                each user in users
+                  li #{user.name}
 
             footer
                 h3 footer section
                 p
-                    a(href="https://varzesh3.ir") my link
+                    a(href=link) my link
