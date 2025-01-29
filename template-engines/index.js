@@ -4,6 +4,8 @@ const { NotFoundError, ErrorHandler } = require("./utils/errorHandler");
 const app = express()
 const port = 3000
 
+// app.use("/static",express.static('public'))
+app.use(express.static('public'))
 
 app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views'));
