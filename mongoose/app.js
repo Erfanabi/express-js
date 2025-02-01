@@ -33,6 +33,42 @@ app.post("/create", async (req, res, next) => {
   }
 });
 
+app.get("/insert-many", async (req, res) => {
+  const blogs = [
+    { title: "مقاله اول", text: "متن مقاله اول", author: "علی" },
+    { title: "مقاله دوم", text: "متن مقاله دوم", author: "حسین" },
+    { title: "مقاله سوم", text: "متن مقاله سوم", author: "مریم" },
+  ];
+
+  try {
+    const result = await BlogModel.insertMany(blogs);
+    console.log("✅ مقالات با موفقیت وارد شدند:", result);
+  } catch (error) {
+    console.error("❌ خطا در وارد کردن مقالات:", error);
+  }
+})
+
+app.get("/blogs", async (req, res) => {
+  try {
+    const result = await BlogModel.find();
+    res.status(200).json({ statusCode: 200, documentCount: result.length, blogs: result });
+  } catch (error) {
+    console.error("❌ خطا در وارد کردن مقالات:", error);
+  }
+})
+
+app.get("/blogs/:id", async (req, res) => {
+  const blogId = req.params.id;
+
+  try {
+    const result = await BlogModel.findOne({ _id: blogId });
+    res.status(200).json({ statusCode: 200, blogs: result });
+  } catch (error) {
+    console.error("❌ خطا", error);
+  }
+})
+
+
 app.use(NotFoundError)
 app.use(ErrorHandler)
 
